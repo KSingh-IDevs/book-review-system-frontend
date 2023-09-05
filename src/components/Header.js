@@ -1,15 +1,17 @@
 'use client'
-import { LightningBoltIcon } from "@radix-ui/react-icons"
+import { useGlobalStates } from "@/store"
+import { LightningBoltIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { Button, Dialog, Flex, IconButton, Text, TextField } from "@radix-ui/themes"
 import Link from "next/link"
 
 const Header = () => {
-    const toggleDarkMode = () => setDarkMode(!darkMode)
+    const { setTheme, theme } = useGlobalStates()
+    const toggleDarkMode = () => setTheme(!theme)
 
     return (
-        <nav className="navbar navbar-expand-lg fixed-top py-4 sm:px-10 px-5 shadow-sm shadow-pink-300">
-            <div className="flex flex-row justify-between">
-                <a href="/" className="text-pink-600 font-semibold  hover:text-pink-500">Book Review System</a>
+        <nav className="navbar navbar-expand-lg fixed-top py-3 sm:px-10 px-2 shadow-sm shadow-pink-300">
+            <div className="flex flex-row justify-between items-center">
+                <Link href="/" className="text-pink-600 dark:text-pink-50 font-semibold  hover:text-pink-500">Book Review System</Link>
                 <Flex justify="center" align="center" gap={"3"} wrap="nowrap">
                     {/* <Link href={"/signin"} className="bg-pink-600 text-white py-2 px-4 rounded-full hover:bg-pink-500" >Sign in</Link> */}
                     <Dialog.Root>
@@ -51,13 +53,15 @@ const Header = () => {
                                     </Button>
                                 </Dialog.Close>
                                 <Dialog.Close>
-                                    <Button>Save</Button>
+                                    <Button  onClick={() => console.log("clicked save")}>Save</Button>
                                 </Dialog.Close>
                             </Flex>
                         </Dialog.Content>
                     </Dialog.Root>
-                    <IconButton className="bg-none" onClick={toggleDarkMode} >
-                        <LightningBoltIcon />
+                    <IconButton variant="ghost" className="bg-none" onClick={toggleDarkMode} >
+                        {
+                            theme ? <SunIcon /> : <MoonIcon />
+                        }
                     </IconButton>
                 </Flex>
             </div>
